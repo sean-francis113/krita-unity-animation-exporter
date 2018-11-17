@@ -84,6 +84,15 @@ class Unity_animation_exporter(Extension):
 	def SetPrefix(self):
 		self.FilePrefix = self.ui.lineEdit_FilePrefix.text()
 		self.AddToLog("File Prefix is: " + self.FilePrefix)
+		
+	##########
+	#
+	# Sets the Animation Name
+	#
+	##########
+	def SetName(self):
+		self.AnimationName = self.ui.lineEdit_AnimName.text()
+		self.AddToLog("Animation Name is: " + self.AnimationName)
 
 	#########
 	#
@@ -124,7 +133,7 @@ class Unity_animation_exporter(Extension):
 		xmlFilePath = ""
 		xmlFile = None
 
-		self.XMLString += "\t\t</FrameCollection>\n\t</" + self.FilePrefix + ">\n</UnityAnimation>"
+		self.XMLString += "\t\t</FrameCollection>\n\t</" + self.AnimationName + ">\n</UnityAnimation>"
 		xmlFilePath = self.filepath
 		xmlFile = open((xmlFilePath + "xml_%s" + self.xmlExtension) % (datetime.datetime.now().strftime("%m%d%Y_%H%M%S")), "w+")
 		xmlFile.write(self.XMLString)
@@ -203,11 +212,12 @@ class Unity_animation_exporter(Extension):
 		self.CloneDocument()
 		self.AddToLog("Document Cloned...")		
 		self.AddToLog("Setting Data...")
+		self.SetName()
 		self.SetPrefix()
 		self.SetExtensions()
 		self.SetFilePath()
 		self.XMLString = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n"
-		self.XMLString += "<UnityAnimation>\n\t<" + self.FilePrefix + ">\n\t\t<FrameCollection>\n"
+		self.XMLString += "<UnityAnimation>\n\t<" + self.AnimationName + ">\n\t\t<FrameCollection>\n"
 		self.AddToLog("XML Started...")
 		self.AddToLog("Data Set...")
 		self.AddToLog("Removing Top Layers...")
